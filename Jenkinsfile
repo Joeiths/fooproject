@@ -6,8 +6,7 @@ pipeline {
                 git 'https://github.com/Joeiths/fooproject.git'
             }
         }
-        
-        stage('newman') {
+        stage('Newman') {
             steps {
                 sh 'newman run Restful_Booker_postman_collection.json --environment Restful_Booker_postman_environment.json --reporters junit'
             }

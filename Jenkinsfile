@@ -6,15 +6,28 @@ pipeline {
                 git 'https://github.com/Joeiths/fooproject.git'
             }
         }
-         stage('newman') {
+        stage('Build') {
+             steps {
+                sh "mvn compile"
+             }
+        }
+        stage('Test') {
+             steps {
+                sh "mvn test"
+             }
+        }
+        stage('Create coverage report') {
+                     steps {
+                        sh "mvn cobertura:cobertura"
+                     }
+                }
+        stage('Newman') {
             steps {
-                sh 'newman run Restful_Booker_Facit.postman_collection.json --environment Restful_Booker.postman_environment.json --reporters junit'
+                sh 'newman run "Restful Booker.postman_collection.json" --environment "Restful Booker.postman_environment.json" --reporters cli,junit'
             }
             post {
-                always {
-                        junit '**/*xml'
+                    always {
+                            junit '**/*xml'
                     }
-                }
-         }
-    }
-}
+             }
+       

@@ -17,29 +17,36 @@ pipeline {
                     }
              }
         }
-        stage('Robot Framework System tests with Selenium') {
-            steps {
-                sh 'robot --variable BROWSER:headlesschrome -d Results  Tests'
-            }
-            post {
-                always {
-                    script {
-                          step(
-                                [
-                                  $class              : 'RobotPublisher',
-                                  outputPath          : 'results',
-                                  outputFileName      : '**/output.xml',
-                                  reportFileName      : '**/report.html',
-                                  logFileName         : '**/log.html',
-                                  disableArchiveOutput: false,
-                                  passThreshold       : 50,
-                                  unstableThreshold   : 40,
-                                  otherFiles          : "**/*.png,**/*.jpg",
-                                ]
-                          )
-                    }
-                }
-            }
+        stage('Robot') {
+             steps {
+                 sh 'robot -d results --variable BROWSER:headlesschrome infotivTest.robot'
+             }
+             post {
+                 always {
+                     script {
+                           step(
+                                 [
+                                   $class              : 'RobotPublisher',
+                                   outputPath          : 'results',
+                                   outputFileName      : '**/output.xml',
+                                   reportFileName      : '**/report.html',
+                                   logFileName         : '**/log.html',
+                                   disableArchiveOutput: false,
+                                   passThreshold       : 50,
+                                   unstableThreshold   : 40,
+                                   otherFiles          : "**/*.png,**/*.jpg",
+                                 ]
+                            )
+                     }
+                 }
+             }
         }
-    } 
+    }
+    post {
+        always {
+                junit '**/*xml'
+                step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+
+        }
+    }
 }

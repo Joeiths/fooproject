@@ -6,3 +6,5 @@ pipeline {
                 git 'https://github.com/Joeiths/fooproject.git'
             }
         }
+    }
+}

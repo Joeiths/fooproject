@@ -6,5 +6,10 @@ pipeline {
                 git 'https://github.com/Joeiths/fooproject.git'
             }
         }
+        stage('Build') {
+            steps {
+                sh "mvn compile"
+            }
+        }
     }
 }

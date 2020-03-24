@@ -11,6 +11,13 @@ pipeline {
                 sh "mvn compile
             }
         }
+        
+        stage('Test') {
+            steps {
+                sh "mvn test"
+            }
+        }
+        
         stage('Newman') {
             steps {
                 sh 'newman run Restful_Booker_postman_collection.json --environment Restful_Booker_postman_environment.json --reporters junit'
@@ -23,3 +30,4 @@ pipeline {
         }
     }
 }
+            

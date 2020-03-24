@@ -9,6 +9,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh "mvn compile"
+            }
+        }
       
         stage('Newman') {
             steps {

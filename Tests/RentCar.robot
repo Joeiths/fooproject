@@ -35,10 +35,3 @@ Date Selection
         [Documentation]             Testing date Function
         [Tags]                      Test 5 Selecting Date function
         Date Selection
-
-Booking a Car
-        [Documentation]             Testing to book a car
-        [Tags]                      Test 6 Booking of a car
-        Date Selection
-        Login Function
-        Booking a Car
